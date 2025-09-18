@@ -1,0 +1,34 @@
+.text-input {
+  width: 100%;
+  padding: 10px 12px;
+  font: 16px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .04);
+  color: inherit;
+  margin: 10px 0 14px;
+}
+
+.text {
+  line-height: 1.8;
+  font-size: 20px;
+  letter-spacing: .2px;
+}
+
+.char {
+  padding: 0 1px;
+}
+
+.char.correct {
+  opacity: 1;
+}
+
+.char.wrong {
+  background: rgba(239, 68, 68, .18);
+  text-decoration: underline wavy #ef4444;
+}
+
+.char.pending {
+
+  opacity: .55;
+}

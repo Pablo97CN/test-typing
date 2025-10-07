@@ -46,7 +46,7 @@ function mantenerFocus() {
 
 async function juego() {
     let frase = await obtenerFrase("media"); // 'facil' | 'media' | 'dificil'
-    // console.log(frase);
+    console.log(frase);
     const arrayFrase = [...frase];
     let fraseHTML = [...frase].map((letra) => {
         return `<span>${letra}</span>`;
@@ -56,6 +56,7 @@ async function juego() {
     console.log(fraseHTML);
     let indice = 0;
     mantenerFocus();
+    fraseActual.children[indice].classList.add("cursor");
     contenedorInputElement.addEventListener("input", (e) => {
         if (e.data === arrayFrase[indice]) {
             fraseActual.children[indice].classList.remove("cursor");

@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+}
+
+#barraTiempo {
+    height: 10px;
+    width: 100%;
+    background-color: red;
+}
+
+#rellenoTiempo {
+    height: 10px;
+    background: grey;
+    width: 0%;
+}
+
+.comenzarTiempo {
+    animation-name: completarBarraTiempo;
+    animation-duration: var(--tiempo);
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+
+}
+
+@keyframes completarBarraTiempo {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+.deshabilitado {
+    display: none;
+}
+
+#contenedorFrase p {
+    font-size: 50px;
+}
+
+.ok {
+    color: #16a34a;
+}
+
+.fail {
+    color: #dc2626;
+}
+
+.cursor {
+    color: grey;
+    text-decoration: underline;
+}
+
+/* Seccion Score */
+#score p {
+    padding: 20px;
+    border: 2px solid;
+    border-color: blue;
+    border-radius: 20px;
+    width: 200px;
+}

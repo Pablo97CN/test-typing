@@ -1,0 +1,23 @@
+{
+    "facil": [
+        "La casa es grande.",
+        "El sol brilla hoy.",
+        "Practicar a diario mejora mucho.",
+        "Pulsa las teclas con suavidad.",
+        "Escribe sin mirar el teclado."
+    ],
+    "media": [
+        "Programar es resolver problemas paso a paso.",
+        "La precisión es más importante que la velocidad al principio.",
+        "Divide las tareas en trozos pequeños y medibles.",
+        "Un buen descanso mejora el rendimiento al teclear.",
+        "La constancia vence a la inspiración pasajera."
+    ],
+    "dificil": [
+        "¿Podrías explicarme cómo sincronizar eventos asíncronos sin bloquear el hilo?",
+        "La práctica deliberada requiere atención plena y retroalimentación inmediata.",
+        "Optimiza tu postura: espalda recta, muñecas neutras y mirada al frente.",
+        "Evita tensar los hombros; respira y libera la presión al escribir.",
+        "Alterna ejercicios de precisión con sprints de velocidad controlada."
+    ]
+}

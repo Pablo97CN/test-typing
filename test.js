@@ -9,10 +9,6 @@ const ppmElement = document.querySelector("#ppm span");
 const contenedorFraseElement = document.getElementById("contenedorFrase");
 const fraseDOM = contenedorFraseElement.querySelector("p");
 const contenedorInputElement = document.getElementById("juegoInput");
-const contenedor = document.querySelector(".dificultad");
-let dificultad =
-    document.querySelector('input[name="dificultad"]:checked')?.value ||
-    "facil";
 
 // VARIABLES
 const tiempoJuego = 5;
@@ -21,8 +17,13 @@ let indice = 0;
 let aciertos;
 let errores;
 let ppm;
-// Referencia al handler para suscribir/desuscribir (manejar el evento mediante el observer)
+
+// =========================
+// OBSERVER: referencia al handler para suscribir/desuscribir
+// Motivo: evitar listeners duplicados en cada inicio de juego()
+// =========================
 let inputHandlerRef = null;
+
 //FUNCIONES//
 
 //Obtener la frase//
@@ -35,8 +36,7 @@ async function cargarFrases() {
     return texto;
 }
 
-async function obtenerFrase(dificultad) {
-    console.log(dificultad);
+async function obtenerFrase(dificultad = "media") {
     const data = await cargarFrases();
     const lista = data[dificultad];
     const idx = Math.floor(Math.random() * lista.length);
@@ -55,15 +55,14 @@ function mantenerFocus() {
 
 async function juego() {
     indice = 0;
-    await obtenerFrase(dificultad);
+    await obtenerFrase("media");
     // let spans = fraseDOM.children;
     let spans = [...fraseDOM.children];
     mantenerFocus();
 
     spans[indice].classList.add("cursor");
 
-    // Utilizamos un handler para tener una referencia al evento y poder quitarlo (evento suscrito)
-    function handler(e) {
+    function onInput(e) {
         if (e.data === spans[indice].textContent) {
             spans[indice].classList.remove("cursor");
             spans[indice].classList.add("ok");
@@ -79,7 +78,7 @@ async function juego() {
             // al terminar, cargamos nueva frase y reiniciamos índice;
             // NO añadimos otro listener: se reutiliza este mismo observer
             (async () => {
-                await obtenerFrase(dificultad);
+                await obtenerFrase("media");
                 spans = fraseDOM.children;
                 indice = 0;
                 spans[indice].classList.add("cursor");
@@ -92,16 +91,15 @@ async function juego() {
 
     // =========================
     // OBSERVER: limpieza y suscripción única
-    // Primera vez que se inicia: inputHandlerRef vale null por lo que no elimina el evento de escucha.
-    // Si se reinicia el juego (segunda vez) detecta que ya había un evento de escucha porque la referencia no es nul, elimina el que había y vuelve a poner otro para evitar acumular eventos de escucha.
+    // Motivo: si ya había un listener, lo removemos para no duplicar ejecuciones.
     // =========================
-
     if (inputHandlerRef) {
         contenedorInputElement.removeEventListener("input", inputHandlerRef);
     }
-    inputHandlerRef = handler;
+    inputHandlerRef = onInput;
     contenedorInputElement.addEventListener("input", inputHandlerRef);
 }
+
 function empezar() {
     aciertos = 0;
     errores = 0;
@@ -116,6 +114,9 @@ function empezar() {
 function reiniciar() {
     btn_start.classList.toggle("deshabilitado", false);
     scoreElement.classList.toggle("deshabilitado", true);
+    // aciertosElement.textContent = "";
+    // erroresElement.textContent = "";
+    // ppmElement.textContent = "";
     aciertos = 0;
     errores = 0;
     ppm = 0;
@@ -136,9 +137,3 @@ btn_start.addEventListener("click", async () => {
 });
 btn_reiniciar.addEventListener("click", () => reiniciar());
 relleno.addEventListener("animationend", () => finTiempo());
-contenedor.addEventListener("change", (e) => {
-    if (e.target.matches('input[name="dificultad"]')) {
-        dificultad = e.target.value; // se usará en la próxima frase
-        // listo: no hace falta nada más
-    }
-});

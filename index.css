@@ -1,6 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+
+:root {
+    --color-blanco: #EBF0F3;
+    --color-negro: #101C22;
+    --color-azul: #A4D7FD;
+    --color-azulOscuro: #328CD4;
+    /* --color-grisOscuro: #4a6377fd; */
+}
+
 body {
     margin: 0;
+    box-sizing: border-box;
     min-height: 100vh;
+    font-family: "Space Grotesk", sans-serif;
+    background-color: var(--color-negro);
+    color: white;
+
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    /* header | main | footer */
+}
+
+
+/*
+============
+# Cabecera #
+============
+*/
+
+header {
+    display: grid;
+    /* height: 5rem; */
+    grid-template-columns: 1fr .5fr 1fr;
+    gap: 1rem;
+    border-color: var(--color-blanco);
+    padding: .5rem;
+    margin-bottom: 1rem;
+    border-bottom: .5px solid var(--color-azul);
+    box-shadow: 0 0 5px var(--color-azulOscuro) 0 0 25px var(--color-azul);
+}
+
+
+/* logo */
+.logo {
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
+
+.logo img {
+    height: 95px;
+    margin-bottom: 10px;
+
+}
+
+.logo span {
+    color: var(--color-blanco);
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.ico_settings img {
+    height: 75px;
+    cursor: pointer;
+}
+
+.dificultad {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: .75rem;
+}
+
+.dificultadOpciones {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-naranajaOscuro);
+    border-radius: 20px;
+    margin: auto;
+    gap: .5rem;
+}
+
+.dificultad input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.dificultadOpcion span {
+    display: inline-flex;
+    align-items: center;
+    padding: .5rem 1rem;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 400;
+    font-size: 18px;
+    /* display: none; */
+}
+
+.dificultadOpcion>input:checked+span {
+    /* background: var(--color-negro); */
+    color: var(--color-azulOscuro);
+    text-decoration: underline;
+
+}
+
+.dificultadOpcion>input:focus-visible+span,
+.dificultadOpcion:has(> input:focus-visible) {
+    outline: 2px solid var(--color-naranajaOscuro);
+    outline-offset: 2px;
+}
+
+/* Main */
+/* main {
+    display: flex;
+    align-items: center;
+} */
+
+.inicioJuego {
+    display: grid;
+    place-items: center;
+    gap: 1rem;
+}
+
+#btnStart {
+    padding: 50px 100px;
+    border: 5px solid var(--color-naranajaOscuro);
+    border-radius: 30px;
+
 }
 
 #barraTiempo {

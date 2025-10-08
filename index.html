@@ -9,24 +9,63 @@
     </head>
     <body>
         <header>
-            <div>
-                <img src="./src/teclado (1).png" alt="icono" />
+            <div class="logo">
+                <img src="./src/logo.png" alt="icono" />
+                <span>TypeFast</span>
+            </div>
+            <div></div>
+            <div class="dificultad">
+                <div class="ico_settings">
+                    <img src="src/settings.jpg" alt="settings" />
+                </div>
+                <div class="dificultadOpciones">
+                    <label class="dificultadOpcion">
+                        <input
+                            type="radio"
+                            name="dificultad"
+                            value="facil"
+                            checked
+                        />
+                        <span>Fácil</span>
+                    </label>
+                    <label class="dificultadOpcion">
+                        <input type="radio" name="dificultad" value="media" />
+                        <span>Media</span>
+                    </label>
+                    <label class="dificultadOpcion">
+                        <input type="radio" name="dificultad" value="dificil" />
+                        <span>Difícil</span>
+                    </label>
+                </div>
             </div>
         </header>
-        <div id="barraTiempo">
-            <div id="rellenoTiempo"></div>
-        </div>
-        <button id="btnStart">Epezar</button>
-        <div id="contenedorFrase" class="deshabilitado">
-            <p></p>
-            <input type="text" id="juegoInput" />
-        </div>
-        <div id="score" class="deshabilitado">
-            <p id="aciertos">Aciertos: <span></span></p>
-            <p id="errores">Errores: <span></span></p>
-            <p id="ppm">PPM: <span></span></p>
-            <button id="btnReiniciar">Reiniciar</button>
-        </div>
+        <main>
+            <section class="inicioJuego">
+                <div id="barraTiempo">
+                    <div id="rellenoTiempo"></div>
+                </div>
+
+                <h1>Improve your typing speed.</h1>
+                <p>
+                    A minimalist typing test to help you focus on your speed and
+                    accuracy.
+                </p>
+                <button id="btnStart">Epezar</button>
+            </section>
+            <section class="juego">
+                <div id="contenedorFrase" class="deshabilitado">
+                    <p></p>
+                    <input type="text" id="juegoInput" />
+                </div>
+            </section>
+            <section id="score" class="deshabilitado">
+                <p id="aciertos">Aciertos: <span></span></p>
+                <p id="errores">Errores: <span></span></p>
+                <p id="ppm">PPM: <span></span></p>
+                <button id="btnReiniciar">Reiniciar</button>
+            </section>
+        </main>
+
         <footer>
             <p>Ya pondré algo fdfafa</p>
         </footer>

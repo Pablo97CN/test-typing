@@ -14,60 +14,134 @@
                 <span>TypeFast</span>
             </div>
             <div></div>
-            <div class="dificultad">
-                <div class="ico_settings">
-                    <img src="src/settings.jpg" alt="settings" />
-                </div>
-                <div class="dificultadOpciones">
-                    <label class="dificultadOpcion">
-                        <input
-                            type="radio"
-                            name="dificultad"
-                            value="facil"
-                            checked
-                        />
-                        <span>Fácil</span>
-                    </label>
-                    <label class="dificultadOpcion">
-                        <input type="radio" name="dificultad" value="media" />
-                        <span>Media</span>
-                    </label>
-                    <label class="dificultadOpcion">
-                        <input type="radio" name="dificultad" value="dificil" />
-                        <span>Difícil</span>
-                    </label>
-                </div>
+            <div id="icoSettings">
+                <img src="src/engranaje.png" alt="settings" />
             </div>
         </header>
         <main>
-            <section class="inicioJuego">
+            <section id="inicioJuego">
+                <div class="titulo">
+                    <h1>Improve your typing speed.</h1>
+                    <p>
+                        A minimalist typing test to help you focus on your
+                        accuracy.
+                    </p>
+                </div>
+
+                <button id="btnStart">Epezar</button>
+            </section>
+            <section id="juego" class="deshabilitado">
                 <div id="barraTiempo">
                     <div id="rellenoTiempo"></div>
                 </div>
-
-                <h1>Improve your typing speed.</h1>
-                <p>
-                    A minimalist typing test to help you focus on your speed and
-                    accuracy.
-                </p>
-                <button id="btnStart">Epezar</button>
-            </section>
-            <section class="juego">
                 <div id="contenedorFrase" class="deshabilitado">
                     <p></p>
                     <input type="text" id="juegoInput" />
                 </div>
+                <button id="terminarPrueba">Terminar prueba</button>
             </section>
             <section id="score" class="deshabilitado">
-                <p id="aciertos">Aciertos: <span></span></p>
-                <p id="errores">Errores: <span></span></p>
-                <p id="ppm">PPM: <span></span></p>
-                <button id="btnReiniciar">Reiniciar</button>
+                <div class="scoreResultados">
+                    <p id="aciertos">Aciertos: <span></span></p>
+                    <p id="errores">Errores: <span></span></p>
+                    <p id="ppm">PPM: <span></span></p>
+                </div>
+                <div>
+                    <img
+                        src="src/reiniciar.png"
+                        id="btnReiniciar"
+                        class="spin"
+                        alt="reiniciar"
+                    />
+                </div>
+            </section>
+
+            <section id="modalSettings">
+                <div class="modalBackdrop"></div>
+                <div class="settings">
+                    <div id="btnClose">
+                        <img src="src/cruz.png" alt="" />
+                    </div>
+                    <form id="settingsForm">
+                        <div class="dificultadOpciones">
+                            <h1>Seleccione la dificultad de la prueba</h1>
+                            <div class="inputDificultad">
+                                <label class="dificultadOpcion">
+                                    <input
+                                        type="radio"
+                                        name="dificultad"
+                                        value="facil"
+                                        checked
+                                    />
+                                    <span>Fácil</span>
+                                </label>
+                                <label class="dificultadOpcion">
+                                    <input
+                                        type="radio"
+                                        name="dificultad"
+                                        value="media"
+                                    />
+                                    <span>Media</span>
+                                </label>
+                                <label class="dificultadOpcion">
+                                    <input
+                                        type="radio"
+                                        name="dificultad"
+                                        value="dificil"
+                                    />
+                                    <span>Difícil</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="tiempoOpciones">
+                            <h1>Selecione el tiempo de la prueba</h1>
+                            <div class="inputTiempo">
+                                <input
+                                    id="tiempoValor"
+                                    name="tiempoValor"
+                                    type="number"
+                                    step="30"
+                                    value="30"
+                                    min="0"
+                                />
+                            </div>
+                        </div>
+                        <div class="btnSettings">
+                            <button type="button" class="btnCancelar">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="btnAceptar">
+                                Aceptar
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </section>
         </main>
 
         <footer>
-            <p>Ya pondré algo fdfafa</p>
+            <p>Pablo Chillón Núñez</p>
+            <div class="icons">
+                <a href="https://github.com/Pablo97CN" target="_blank">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.78-1.34-1.78-1.1-.75.09-.73.09-.73 1.22.09 1.86 1.26 1.86 1.26 1.08 1.85 2.83 1.32 3.52 1.01.11-.79.42-1.32.77-1.62-2.67-.3-5.48-1.34-5.48-5.96 0-1.32.47-2.4 1.25-3.25-.13-.3-.54-1.53.12-3.18 0 0 1.01-.32 3.3 1.24a11.46 11.46 0 0 1 6 0c2.29-1.56 3.3-1.24 3.3-1.24.66 1.65.25 2.88.12 3.18.78.85 1.25 1.93 1.25 3.25 0 4.63-2.81 5.65-5.49 5.95.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5Z"
+                            fill="currentColor"
+                        ></path>
+                    </svg>
+                </a>
+                <a
+                    href="https://www.linkedin.com/in/pablo-chillón-núñez"
+                    target="_blank"
+                >
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M4.98 3.5c0 1.38-1.1 2.5-2.48 2.5A2.49 2.49 0 0 1 0 3.5C0 2.12 1.1 1 2.5 1S5 2.12 5 3.5zM0 8.98h5v15H0v-15zm8.5 0h4.78v2.05h.07c.67-1.27 2.3-2.6 4.74-2.6 5.07 0 6 3.34 6 7.68v7.87h-5v-6.98c0-1.67-.03-3.82-2.33-3.82-2.33 0-2.69 1.82-2.69 3.7v7.1h-5v-15z"
+                            fill="currentColor"
+                        ></path>
+                    </svg>
+                </a>
+            </div>
         </footer>
     </body>
 </html>

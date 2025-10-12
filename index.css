@@ -15,10 +15,9 @@ body {
     font-family: "Space Grotesk", sans-serif;
     background-color: var(--color-negro);
     color: white;
-
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    /* header | main | footer */
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 
@@ -60,35 +59,110 @@ header {
     font-weight: 700;
 }
 
-.ico_settings img {
-    height: 75px;
-    cursor: pointer;
-}
-
-.dificultad {
+#icoSettings {
     position: relative;
     display: inline-flex;
     align-items: center;
     gap: .75rem;
 }
 
-.dificultadOpciones {
-    display: flex;
-    align-items: center;
-    border: 1px solid var(--color-naranajaOscuro);
-    border-radius: 20px;
-    margin: auto;
-    gap: .5rem;
+#icoSettings img:hover {
+    transform: scale(1.2);
+    transition: transform .2s;
+
 }
 
-.dificultad input[type="radio"] {
+#icoSettings img {
+    height: 50px;
+    cursor: pointer;
+    margin: auto;
+}
+
+
+/*
+============
+# Modal settings #
+============
+*/
+
+
+#modalSettings {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    place-items: center;
+}
+
+#modalSettings.modalAbierto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalBackdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 999;
+    background: rgba(0, 0, 0, .35);
+    backdrop-filter: blur(6px);
+}
+
+.settings {
+    position: relative;
+    width: 750px;
+    z-index: 1000;
+    overflow: auto;
+    box-sizing: border-box;
+    background-color: var(--color-negro);
+    border: 2px solid var(--color-azul);
+    border-radius: 20px;
+    color: var(--color-white);
+}
+
+.settings>form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+
+#btnClose {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+#btnClose>img {
+    height: 25px;
+    width: 25px;
+}
+
+.dificultadOpciones {
+    margin: .5rem
+}
+
+.dificultadOpciones>h1 {
+    text-align: center;
+}
+
+.inputDificultad {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.inputDificultad input[type="radio"] {
     position: absolute;
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-.dificultadOpcion span {
+.inputDificultad span {
     display: inline-flex;
     align-items: center;
     padding: .5rem 1rem;
@@ -96,51 +170,123 @@ header {
     user-select: none;
     font-weight: 400;
     font-size: 18px;
-    /* display: none; */
 }
 
-.dificultadOpcion>input:checked+span {
-    /* background: var(--color-negro); */
-    color: var(--color-azulOscuro);
-    text-decoration: underline;
-
+.inputDificultad>label>input:checked+span {
+    padding: .5rem 1rem;
+    background-color: var(--color-azulOscuro);
+    border: 1px solid var(--color-azul);
+    border-radius: 20px;
+    color: var(--color-blanco);
 }
 
-.dificultadOpcion>input:focus-visible+span,
-.dificultadOpcion:has(> input:focus-visible) {
-    outline: 2px solid var(--color-naranajaOscuro);
-    outline-offset: 2px;
-}
-
-/* Main */
-/* main {
+.inputTiempo {
     display: flex;
+    justify-content: center;
     align-items: center;
-} */
 
-.inicioJuego {
-    display: grid;
-    place-items: center;
-    gap: 1rem;
 }
+
+.inputTiempo input[type="number"] {
+    width: 5rem;
+    height: 2.5rem;
+    text-align: center;
+    border: 2.5px solid var(--color-azul);
+    border-radius: 20px;
+
+}
+
+.inputTiempo input[type="number"]:focus {
+    outline: none;
+
+}
+
+.btnAceptar {
+    margin: 2rem 1rem 1rem 1rem;
+    padding: .5rem 1rem;
+    background-color: var(--color-azulOscuro);
+    border: 1px solid var(--color-azul);
+    border-radius: 10px;
+    color: var(--color-blanco);
+}
+
+.btnCancelar {
+    margin: 2rem 1rem 1rem 1rem;
+    padding: .5rem 1rem;
+    background-color: red;
+    border: 1px solid var(--color-azul);
+    border-radius: 10px;
+    color: var(--color-blanco);
+}
+
+/*
+============
+# Main #
+============
+*/
+main {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    flex: 1;
+}
+
+
+/* --------------------------- */
+/* Section inicio Juego */
+/* --------------------------- */
 
 #btnStart {
-    padding: 50px 100px;
-    border: 5px solid var(--color-naranajaOscuro);
+    background-color: var(--color-azulOscuro);
+    border: 1px solid var(--color-azul);
     border-radius: 30px;
+    width: 200px;
+    height: 75px;
+    margin: auto;
+    margin-top: 5rem;
+    color: var(--color-blanco);
+    font-size: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
+    transform: scale(1);
+    transition: transform .2s;
 }
 
+#btnStart:hover {
+    transform: scale(1.1);
+    transition: transform .2s;
+}
+
+.titulo h1 {
+    color: var(--color-azulOscuro);
+}
+
+.titulo p {
+    color: var(--color-blanco);
+}
+
+/* --------------------------- */
+/* Section Juego */
+/* --------------------------- */
 #barraTiempo {
     height: 10px;
-    width: 100%;
-    background-color: red;
+    width: 80%;
+    margin: auto;
+    background-color: var(--color-blanco);
+    border: 2px solid var(--color-azulOscuro);
+    border-radius: 20px
 }
 
 #rellenoTiempo {
     height: 10px;
-    background: grey;
+    background: var(--color-azul);
     width: 0%;
+    border-radius: 20px
 }
 
 .comenzarTiempo {
@@ -148,17 +294,35 @@ header {
     animation-duration: var(--tiempo);
     animation-fill-mode: forwards;
     animation-timing-function: linear;
+}
+
+#contenedorFrase input {
+    opacity: 0%;
 
 }
 
-@keyframes completarBarraTiempo {
-    0% {
-        width: 0%;
-    }
+#juego button {
+    background-color: var(--color-azulOscuro);
+    border: 1px solid var(--color-azul);
+    border-radius: 30px;
+    width: 200px;
+    height: 75px;
+    margin: auto;
+    color: var(--color-blanco);
+    font-size: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(1);
+    transition: transform .2s;
+}
 
-    100% {
-        width: 100%;
-    }
+#juego button:hover {
+    background-color: red;
+    transform: scale(1.1);
+    transition: transform .2s;
 }
 
 .deshabilitado {
@@ -182,11 +346,111 @@ header {
     text-decoration: underline;
 }
 
-/* Seccion Score */
-#score p {
-    padding: 20px;
-    border: 2px solid;
-    border-color: blue;
-    border-radius: 20px;
-    width: 200px;
+/* --------------------------- */
+/* Section score */
+/* --------------------------- */
+
+.scoreResultados {
+    margin: auto;
+    width: 450px;
+    border: 5px solid var(--color-azulOscuro);
+    border-radius: 30px;
+}
+
+.scoreResultados p {
+    margin: 2.5rem;
+}
+
+
+#btnReiniciar {
+    height: 70px;
+    margin-top: 4rem;
+    cursor: pointer;
+}
+
+#btnReiniciar:hover {
+    animation: spin .4s reverse;
+
+}
+
+/* --------------------------- */
+/* Footer */
+/* --------------------------- */
+footer {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 5px;
+    border-top: 1px solid var(--color-azul);
+}
+
+footer p {
+    margin: 12px;
+}
+
+.icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.icons a {
+    align-items: center;
+    height: 25px;
+    width: 25px;
+    margin-bottom: 12px;
+
+}
+
+.icons a:hover {
+    transform: scale(1.2);
+    transition: transform .2s;
+}
+
+.icon {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.icon path {
+    color: var(--color-azul);
+}
+
+
+/* --------------------------- */
+/* Animaciones */
+/* --------------------------- */
+
+@keyframes completarBarraTiempo {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+
+@keyframes spin {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes saltito {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-6px) scale(1.02);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+    }
 }

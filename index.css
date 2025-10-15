@@ -66,25 +66,31 @@ header {
     gap: .75rem;
 }
 
+#icoSettings img {
+    height: 50px;
+    cursor: pointer;
+    margin: auto;
+    transform: scale(1);
+    transition: transform .2s;
+}
+
+.deshabilitado {
+    filter: brightness(0.4);
+    pointer-events: none;
+}
+
+
 #icoSettings img:hover {
     transform: scale(1.2);
     transition: transform .2s;
 
 }
 
-#icoSettings img {
-    height: 50px;
-    cursor: pointer;
-    margin: auto;
-}
-
-
 /*
 ============
 # Modal settings #
 ============
 */
-
 
 #modalSettings {
     position: fixed;
@@ -115,7 +121,7 @@ header {
     overflow: auto;
     box-sizing: border-box;
     background-color: var(--color-negro);
-    border: 2px solid var(--color-azul);
+    /* border: 2px solid var(--color-azul); */
     border-radius: 20px;
     color: var(--color-white);
 }
@@ -175,7 +181,7 @@ header {
 .inputDificultad>label>input:checked+span {
     padding: .5rem 1rem;
     background-color: var(--color-azulOscuro);
-    border: 1px solid var(--color-azul);
+    border: 0;
     border-radius: 20px;
     color: var(--color-blanco);
 }
@@ -185,38 +191,79 @@ header {
     justify-content: center;
     align-items: center;
 
+
 }
 
 .inputTiempo input[type="number"] {
     width: 5rem;
     height: 2.5rem;
     text-align: center;
-    border: 2.5px solid var(--color-azul);
+    border: 0;
     border-radius: 20px;
 
+    pointer-events: none;
+    /* no recibe clic */
+    user-select: none;
 }
 
 .inputTiempo input[type="number"]:focus {
     outline: none;
+}
+
+.btnInput {
+    display: flex;
+    flex-direction: column;
+    margin: 12px;
+    gap: 6px;
 
 }
+
+.iconoInput {
+    height: 25px;
+    width: 25px;
+    color: var(--color-azulOscuro);
+    /* cursor: pointer; */
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
 
 .btnAceptar {
     margin: 2rem 1rem 1rem 1rem;
     padding: .5rem 1rem;
     background-color: var(--color-azulOscuro);
-    border: 1px solid var(--color-azul);
+    border: 0;
     border-radius: 10px;
     color: var(--color-blanco);
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform .2s;
 }
+
+.btnAceptar:hover {
+    transform: scale(1.2);
+    transition: transform .2s;
+}
+
 
 .btnCancelar {
     margin: 2rem 1rem 1rem 1rem;
     padding: .5rem 1rem;
     background-color: red;
-    border: 1px solid var(--color-azul);
+    border: 0;
     border-radius: 10px;
     color: var(--color-blanco);
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform .2s;
+}
+
+.btnCancelar:hover {
+    transform: scale(1.2);
+    transition: transform .2s;
 }
 
 /*
@@ -239,7 +286,7 @@ main {
 
 #btnStart {
     background-color: var(--color-azulOscuro);
-    border: 1px solid var(--color-azul);
+    /* border: 1px solid var(--color-azul); */
     border-radius: 30px;
     width: 200px;
     height: 75px;
@@ -252,7 +299,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    border: 0;
     transform: scale(1);
     transition: transform .2s;
 }
@@ -262,17 +309,33 @@ main {
     transition: transform .2s;
 }
 
+.titulo {
+    overflow: hidden;
+}
+
 .titulo h1 {
     color: var(--color-azulOscuro);
+    opacity: 0;
+    transform: translateX(-200px);
+}
+
+.desplazamiento {
+    animation: desplazamiento;
+    animation-duration: .75s;
+    animation-timing-function: ease-in;
+    animation-fill-mode: both;
 }
 
 .titulo p {
     color: var(--color-blanco);
+    opacity: 0;
+    transform: translateX(200px);
 }
 
 /* --------------------------- */
-/* Section Juego */
+/* Section inicio Juego */
 /* --------------------------- */
+
 #barraTiempo {
     height: 10px;
     width: 80%;
@@ -298,12 +361,13 @@ main {
 
 #contenedorFrase input {
     opacity: 0%;
-
+    position: absolute;
+    top: -10000;
 }
 
 #juego button {
     background-color: var(--color-azulOscuro);
-    border: 1px solid var(--color-azul);
+    border: 0;
     border-radius: 30px;
     width: 200px;
     height: 75px;
@@ -325,40 +389,56 @@ main {
     transition: transform .2s;
 }
 
-.deshabilitado {
+.oculto {
     display: none;
+}
+
+#contenedorFrase {
+    white-space: pre-wrap;
+    word-break: keep-all;
+    margin: 1rem;
 }
 
 #contenedorFrase p {
     font-size: 50px;
 }
 
-.ok {
-    color: #16a34a;
-}
-
-.fail {
-    color: #dc2626;
+#contenedorFrase span {
+    display: inline-block;
 }
 
 .cursor {
-    color: grey;
+    color: var(--color-azulOscuro);
     text-decoration: underline;
+}
+
+.agitar {
+    animation-name: agitar;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}
+
+
+.desvanecer {
+    animation: desvanecer .5s linear;
+    animation-fill-mode: both;
 }
 
 /* --------------------------- */
 /* Section score */
 /* --------------------------- */
 
+
 .scoreResultados {
-    margin: auto;
-    width: 450px;
-    border: 5px solid var(--color-azulOscuro);
+    justify-content: center;
+    display: flex;
+    /* width: 450px; */
     border-radius: 30px;
+    gap: 3rem;
 }
 
-.scoreResultados p {
-    margin: 2.5rem;
+.scoreResultados span {
+    text-align: center;
 }
 
 
@@ -372,6 +452,50 @@ main {
     animation: spin .4s reverse;
 
 }
+
+#aciertos {
+    width: 100px;
+    height: 100px;
+    border: 7px solid green;
+    border-radius: 100%;
+    background-color: inherit;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.scoreResultados p {
+    margin: 0;
+}
+
+#errores {
+    width: 100px;
+    height: 100px;
+    border: 7px solid red;
+    border-radius: 100%;
+    background-color: inherit;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#precision {
+    width: 100px;
+    height: 100px;
+    border: 7px solid violet;
+    border-radius: 100%;
+    background-color: inherit;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
 
 /* --------------------------- */
 /* Footer */
@@ -401,7 +525,8 @@ footer p {
     height: 25px;
     width: 25px;
     margin-bottom: 12px;
-
+    transform: scale(1);
+    transition: transform .2s;
 }
 
 .icons a:hover {
@@ -441,16 +566,58 @@ footer p {
     }
 }
 
-@keyframes saltito {
+@keyframes desplazamiento {
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes aparecer {
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes desvanecer {
     0% {
-        transform: translateY(0) scale(1);
+        transform: scale(1);
+        opacity: 1;
     }
 
     50% {
-        transform: translateY(-6px) scale(1.02);
+        transform: scale(1.5);
+        opacity: 1;
     }
 
     100% {
-        transform: translateY(0) scale(1);
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+
+
+@keyframes agitar {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-2px);
+    }
+
+    40% {
+        transform: translateX(2px);
+    }
+
+    60% {
+        transform: translateX(-2px);
+    }
+
+    80% {
+        transform: translateX(2px);
     }
 }

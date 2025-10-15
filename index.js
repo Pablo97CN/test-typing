@@ -5,14 +5,12 @@ const btn_start = document.getElementById("btnStart");
 const btn_reiniciar = document.getElementById("btnReiniciar");
 //Elemento animacion tiempo
 const relleno = document.getElementById("rellenoTiempo");
-//Contenedor score
-const scoreElement = document.getElementById("score");
 //Elemento que muestra los aciertos
 const aciertosElement = document.querySelector("#aciertos span");
 //Elemento que muestra los errores
 const erroresElement = document.querySelector("#errores span");
 //Elemento que muestra el porcentaje de aciertos
-const ppmElement = document.querySelector("#ppm span");
+const precisionElement = document.querySelector("#precision span");
 //Elemento contenedor donde se encuentra nuestro elemento html donde inyectamos la fras
 const contenedorFraseElement = document.getElementById("contenedorFrase");
 //Elemento donde se inyecta la frase de la prueba
@@ -41,9 +39,9 @@ document.documentElement.style.setProperty("--tiempo", tiempoJuego + "s");
 let tiempoActivo = false;
 
 let indice = 0;
-let aciertos;
-let errores;
-let ppm;
+let aciertos = 0;
+let errores = 0;
+let precision;
 // Referencia al handler para suscribir/desuscribir (manejar el evento mediante el observer)
 let inputHandlerRef = null;
 
@@ -85,10 +83,10 @@ function mantenerFocus() {
 // Manejador de pantallas
 function setPantallaActual(nextPantalla) {
     Object.values(pantallas).forEach((pantalla) =>
-        pantalla.classList.add("deshabilitado")
+        pantalla.classList.add("oculto")
     );
     const pantallaActual = pantallas[nextPantalla];
-    pantallaActual.classList.remove("deshabilitado");
+    pantallaActual.classList.remove("oculto");
 }
 
 async function juego() {
@@ -103,21 +101,28 @@ async function juego() {
     function handler(e) {
         if (e.data === spans[indice].textContent) {
             spans[indice].classList.remove("cursor");
-            spans[indice].classList.add("ok");
+            spans[indice].classList.add("desvanecer");
             aciertos++;
+            indice++;
         } else {
             spans[indice].classList.remove("cursor");
-            spans[indice].classList.add("fail");
+            spans[indice].classList.add("agitar");
+            spans[indice].addEventListener(
+                "animationend",
+                () => {
+                    spans[indice].classList.remove("agitar");
+                },
+                { once: true }
+            );
             errores++;
         }
-        indice++;
         console.log(indice);
         if (indice >= spans.length) {
             // al terminar, cargamos nueva frase y reiniciamos índice;
             // NO añadimos otro listener: se reutiliza este mismo observer
             (async () => {
                 await obtenerFrase(dificultad);
-                spans = fraseDOM.children;
+                spans = [...fraseDOM.children];
                 indice = 0;
                 spans[indice].classList.add("cursor");
             })();
@@ -127,15 +132,10 @@ async function juego() {
         return;
     }
 
-    // =========================
-    // OBSERVER: limpieza y suscripción única
-    // Primera vez que se inicia: inputHandlerRef vale null por lo que no elimina el evento de escucha.
-    // Si se reinicia el juego (segunda vez) detecta que ya había un evento de escucha porque la referencia no es nul, elimina el que había y vuelve a poner otro para evitar acumular eventos de escucha.
-    // =========================
-
     if (inputHandlerRef) {
         contenedorInputElement.removeEventListener("input", inputHandlerRef);
     }
+
     inputHandlerRef = handler;
     contenedorInputElement.addEventListener("input", inputHandlerRef);
 }
@@ -145,61 +145,97 @@ function empezar() {
     console.log(tiempoJuego);
     aciertos = 0;
     errores = 0;
-    ppm = 0;
+    precision = 0;
     contenedorInputElement.value = "";
     juego();
-    console.log("empezamos");
-    console.log(tiempoActivo);
     relleno.classList.toggle("comenzarTiempo", true);
-    contenedorFraseElement.classList.toggle("deshabilitado");
+    contenedorFraseElement.classList.toggle("oculto");
+    document
+        .querySelector("#icoSettings img")
+        .classList.toggle("deshabilitado", true);
 }
 function reiniciar() {
     setPantallaActual("inicio");
     aciertos = 0;
     errores = 0;
-    ppm = 0;
+    precision = 0;
 }
 
 function finTiempo() {
     console.log("termino el tiempo");
     tiempoActivo = false;
-    console.log(tiempoActivo);
     setPantallaActual("score");
     aciertosElement.textContent = aciertos;
     erroresElement.textContent = errores;
-    ppmElement.textContent = "cambiar";
-    contenedorFraseElement.classList.toggle("deshabilitado");
+    precisionElement.textContent = exactitud() + "%";
+    contenedorFraseElement.classList.toggle("oculto");
+    document
+        .querySelector("#icoSettings img")
+        .classList.toggle("deshabilitado", false);
 }
 
+// Funciones del modal
 function abrirModal() {
+    //capturamos los botones del input del tiempo
+    const input = document.getElementById("tiempoValor");
+    const menos = document.getElementById("menos");
+    const mas = document.getElementById("mas");
+
+    // Referencia a las funciones de los listeners
+    const aumentarValor = () => input.stepUp();
+    const disminuirValor = () => input.stepDown();
+
+    // Añadimos los listeners. Evento + función. Click + aumentar/disminuir
+    mas.addEventListener("click", aumentarValor);
+    menos.addEventListener("click", disminuirValor);
+
+    //Abrimos el modal
+    modal.classList.add("modalAbierto");
+
+    // Cargar los datos del form al abrir el modal
     form.querySelector(
         `input[name="dificultad"][value="${dificultad}"]`
     ).checked = true;
     form.tiempoValor.value = tiempoJuego;
 
-    modal.classList.add("modalAbierto");
-    console.log("boton pulsado");
+    // Cerrar modal guardando los datos del modal
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const newForm = new FormData(form);
+        dificultad = newForm.get("dificultad");
+        tiempoJuego = Number(newForm.get("tiempoValor"));
+        document.documentElement.style.setProperty(
+            "--tiempo",
+            `${tiempoJuego}s`
+        );
+        menos.removeEventListener("click", disminuirValor);
+        mas.removeEventListener("click", aumentarValor);
+        modal.classList.remove("modalAbierto");
+    });
+    //Cerrar modal sin guardar los datos del modal
+    [btnCloseModal, backdrop, btnCancelar].forEach((elemento) =>
+        elemento.addEventListener("click", () => {
+            menos.removeEventListener("click", disminuirValor);
+            mas.removeEventListener("click", aumentarValor);
+            modal.classList.remove("modalAbierto");
+            form.reset();
+        })
+    );
 }
 
-function cerrarModal() {
-    modal.classList.remove("modalAbierto");
-    form.reset();
-    console.log("boton pulsado");
+function exactitud() {
+    let exactitud = Math.round((aciertos / (aciertos + errores)) * 100);
+    return exactitud | 0;
 }
-
 //EVENTOS
-// Capturamos si cambian los settings
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const newForm = new FormData(form);
-    dificultad = newForm.get("dificultad");
-    tiempoJuego = Number(newForm.get("tiempoValor"));
-    console.log(tiempoJuego);
-    document.documentElement.style.setProperty("--tiempo", `${tiempoJuego}s`);
-    modal.classList.remove("modalAbierto");
+
+// Animación al cargar la página
+window.addEventListener("DOMContentLoaded", () => {
+    document.querySelector(".titulo h1").classList.add("desplazamiento");
+    document.querySelector(".titulo p").classList.add("desplazamiento");
 });
 // Boton comenzar el juego
-btn_start.addEventListener("click", async () => {
+btn_start.addEventListener("click", () => {
     tiempoActivo = true;
     empezar();
 });
@@ -209,11 +245,9 @@ btnTerminar.addEventListener("click", () => finTiempo());
 btn_reiniciar.addEventListener("click", () => reiniciar());
 // Cuando termina la animación finaliza el tiempo
 relleno.addEventListener("animationend", () => finTiempo());
-btnOpenModal.addEventListener("click", () => {
+// Evento de escucha para abrir el modal
+document.getElementById("icoSettings").addEventListener("click", () => {
     if (tiempoActivo === false) {
         abrirModal();
     }
 });
-[btnCloseModal, backdrop, btnCancelar].forEach((elemento) =>
-    elemento.addEventListener("click", cerrarModal)
-);

@@ -21,30 +21,45 @@
         <main>
             <section id="inicioJuego">
                 <div class="titulo">
-                    <h1>Improve your typing speed.</h1>
+                    <h1>Mejora tu velocidad al escribir.</h1>
                     <p>
-                        A minimalist typing test to help you focus on your
-                        accuracy.
+                        Una prueba de mecanografía minimalista que le ayudará a
+                        centrarse en su precisión.
                     </p>
                 </div>
 
-                <button id="btnStart">Epezar</button>
+                <button id="btnStart">Start Test</button>
             </section>
-            <section id="juego" class="deshabilitado">
+            <section id="juego" class="oculto">
                 <div id="barraTiempo">
                     <div id="rellenoTiempo"></div>
                 </div>
-                <div id="contenedorFrase" class="deshabilitado">
+                <div id="contenedorFrase" class="oculto">
                     <p></p>
-                    <input type="text" id="juegoInput" />
+                    <input
+                        type="text"
+                        id="juegoInput"
+                        autocomplete="off"
+                        autocapitalize="off"
+                        spellcheck="false"
+                    />
                 </div>
-                <button id="terminarPrueba">Terminar prueba</button>
+                <button id="terminarPrueba">Finish test</button>
             </section>
-            <section id="score" class="deshabilitado">
+            <section id="score" class="oculto">
                 <div class="scoreResultados">
-                    <p id="aciertos">Aciertos: <span></span></p>
-                    <p id="errores">Errores: <span></span></p>
-                    <p id="ppm">PPM: <span></span></p>
+                    <div id="aciertos">
+                        <p>Aciertos:</p>
+                        <span></span>
+                    </div>
+                    <div id="errores">
+                        <p>Errores:</p>
+                        <span></span>
+                    </div>
+                    <div id="precision">
+                        <p>Precisión:</p>
+                        <span></span>
+                    </div>
                 </div>
                 <div>
                     <img
@@ -64,7 +79,7 @@
                     </div>
                     <form id="settingsForm">
                         <div class="dificultadOpciones">
-                            <h1>Seleccione la dificultad de la prueba</h1>
+                            <h1>Dificultad de la prueba</h1>
                             <div class="inputDificultad">
                                 <label class="dificultadOpcion">
                                     <input
@@ -94,7 +109,7 @@
                             </div>
                         </div>
                         <div class="tiempoOpciones">
-                            <h1>Selecione el tiempo de la prueba</h1>
+                            <h1>Tiempo de la prueba en segundos</h1>
                             <div class="inputTiempo">
                                 <input
                                     id="tiempoValor"
@@ -102,8 +117,69 @@
                                     type="number"
                                     step="30"
                                     value="30"
-                                    min="0"
+                                    min="30"
+                                    readonly
                                 />
+                                <div class="btnInput">
+                                    <button
+                                        type="button"
+                                        id="mas"
+                                        class="iconoInput"
+                                    >
+                                        <svg
+                                            class="icon"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            role="img"
+                                            aria-label="Más"
+                                        >
+                                            <line
+                                                x1="12"
+                                                y1="5"
+                                                x2="12"
+                                                y2="19"
+                                            />
+                                            <line
+                                                x1="5"
+                                                y1="12"
+                                                x2="19"
+                                                y2="12"
+                                            />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        id="menos"
+                                        class="iconoInput"
+                                    >
+                                        <svg
+                                            class="icon"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            role="img"
+                                            aria-label="Menos"
+                                        >
+                                            <line
+                                                x1="5"
+                                                y1="12"
+                                                x2="19"
+                                                y2="12"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div class="btnSettings">

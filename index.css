@@ -139,7 +139,14 @@ header {
     top: 10px;
     right: 10px;
     cursor: pointer;
+    transform: scale(1);
 }
+
+#btnClose:hover {
+    transform: scale(1.2);
+    transition-duration: .2s;
+}
+
 
 #btnClose>img {
     height: 25px;
@@ -222,14 +229,20 @@ header {
     height: 25px;
     width: 25px;
     color: var(--color-azulOscuro);
-    /* cursor: pointer; */
     appearance: none;
     background: none;
     border: 0;
     padding: 0;
     margin: 0;
+    transform: scale(1);
+    transition-duration: 0.2s;
 }
 
+.iconoInput:hover {
+    transform: scale(1.2);
+    transition-duration: 0.2s;
+    color: var(--color-azul);
+}
 
 .btnAceptar {
     margin: 2rem 1rem 1rem 1rem;
@@ -362,7 +375,7 @@ main {
 #contenedorFrase input {
     opacity: 0%;
     position: absolute;
-    top: -10000;
+    top: -10000px;
 }
 
 #juego button {
@@ -397,6 +410,18 @@ main {
     white-space: pre-wrap;
     word-break: keep-all;
     margin: 1rem;
+}
+
+.palabra {
+    display: inline-block;
+}
+
+.letra {
+    display: inline-block;
+}
+
+.espacio {
+    display: inline;
 }
 
 #contenedorFrase p {
@@ -446,6 +471,14 @@ main {
     height: 70px;
     margin-top: 4rem;
     cursor: pointer;
+}
+
+#score button {
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
 }
 
 #btnReiniciar:hover {

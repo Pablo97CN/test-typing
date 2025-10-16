@@ -38,12 +38,14 @@ let tiempoJuego = 30;
 document.documentElement.style.setProperty("--tiempo", tiempoJuego + "s");
 let tiempoActivo = false;
 
-let indice = 0;
 let aciertos = 0;
 let errores = 0;
 let precision;
-// Referencia al handler para suscribir/desuscribir (manejar el evento mediante el observer)
+// Referencia al handler para eliminar el evento de escucha al terminar la frase.
+// Inicia en null para la primera frase.
 let inputHandlerRef = null;
+// Referencia al focus para no acumular eventos de escucha.
+let focusRef = null;
 
 // Pantallas del juego
 const pantallas = {
@@ -63,21 +65,23 @@ async function cargarFrases() {
 }
 
 async function obtenerFrase(dificultad) {
-    console.log(dificultad);
     const data = await cargarFrases();
     const lista = data[dificultad];
     const idx = Math.floor(Math.random() * lista.length);
     let frase = lista[idx];
     console.log(frase);
-    let fraseHTML = [...frase].map((letra) => `<span>${letra}</span>`).join("");
-    fraseDOM.innerHTML = fraseHTML;
+    agruparSpansPorPalabra(frase, fraseDOM);
 }
 
-function mantenerFocus() {
-    contenedorInputElement.focus();
-    contenedorInputElement.addEventListener("blur", () =>
-        contenedorInputElement.focus()
-    );
+function mantenerFocus(el) {
+    el.focus();
+    focusRef = () => el.focus();
+    el.addEventListener("blur", focusRef);
+}
+
+function eliminarFocus(el) {
+    el.removeEventListener("blur", focusRef);
+    focusRef = null;
 }
 
 // Manejador de pantallas
@@ -85,21 +89,37 @@ function setPantallaActual(nextPantalla) {
     Object.values(pantallas).forEach((pantalla) =>
         pantalla.classList.add("oculto")
     );
-    const pantallaActual = pantallas[nextPantalla];
-    pantallaActual.classList.remove("oculto");
+    const elPantallaHTML = pantallas[nextPantalla];
+    elPantallaHTML.classList.remove("oculto");
+
+    if (nextPantalla === "juego") {
+        setTimeout(() => mantenerFocus(contenedorInputElement), 0);
+    } else eliminarFocus(contenedorInputElement);
 }
 
 async function juego() {
-    indice = 0;
+    // Limpiamos cualquier listener anterior nada más empezar
+    if (inputHandlerRef) {
+        contenedorInputElement.removeEventListener("input", inputHandlerRef);
+        inputHandlerRef = null;
+    }
     await obtenerFrase(dificultad);
-    let spans = [...fraseDOM.children];
-    mantenerFocus();
 
+    // Elementos que vamos a validar, excluimos .palabra
+    let spans = [
+        ...fraseDOM.querySelectorAll(":scope .letra, :scope .espacio"),
+    ];
+    // Estado inicial
+    let indice = 0;
+    // mantenerFocus();
     spans[indice].classList.add("cursor");
 
-    // Utilizamos un handler para tener una referencia al evento y poder quitarlo (evento suscrito)
+    // handler: función que procesa el evento input.
     function handler(e) {
-        if (e.data === spans[indice].textContent) {
+        const tecla = e.data;
+        const letra = spans[indice].textContent;
+
+        if (tecla === letra) {
             spans[indice].classList.remove("cursor");
             spans[indice].classList.add("desvanecer");
             aciertos++;
@@ -119,10 +139,14 @@ async function juego() {
         console.log(indice);
         if (indice >= spans.length) {
             // al terminar, cargamos nueva frase y reiniciamos índice;
-            // NO añadimos otro listener: se reutiliza este mismo observer
             (async () => {
                 await obtenerFrase(dificultad);
-                spans = [...fraseDOM.children];
+                spans = [
+                    ...fraseDOM.querySelectorAll(
+                        ":scope .letra, :scope .espacio"
+                    ),
+                ];
+
                 indice = 0;
                 spans[indice].classList.add("cursor");
             })();
@@ -132,11 +156,9 @@ async function juego() {
         return;
     }
 
-    if (inputHandlerRef) {
-        contenedorInputElement.removeEventListener("input", inputHandlerRef);
-    }
-
+    // Guardamos la referencia para indicar que existe un evento de escucha y poder eliminarlo en la siguiente frase.
     inputHandlerRef = handler;
+    //Añadimos la escucha de handler() al input donde teclea el usuario
     contenedorInputElement.addEventListener("input", inputHandlerRef);
 }
 
@@ -162,7 +184,6 @@ function reiniciar() {
 }
 
 function finTiempo() {
-    console.log("termino el tiempo");
     tiempoActivo = false;
     setPantallaActual("score");
     aciertosElement.textContent = aciertos;
@@ -185,7 +206,7 @@ function abrirModal() {
     const aumentarValor = () => input.stepUp();
     const disminuirValor = () => input.stepDown();
 
-    // Añadimos los listeners. Evento + función. Click + aumentar/disminuir
+    // Añadimos los listeners aumentar/disminuir
     mas.addEventListener("click", aumentarValor);
     menos.addEventListener("click", disminuirValor);
 
@@ -251,3 +272,40 @@ document.getElementById("icoSettings").addEventListener("click", () => {
         abrirModal();
     }
 });
+// ----------------------------------------------------------------- //
+//Fix para agrupar palabras, de esta manera si la frase no cabe dentro del contenedor no se rompe la palabra sino que se pasa completa a la siguiente linea.
+// Agrupamos por palabras y dentro de palabras cada letra en un span. El span que agrupa palabras tiene .palabra y el espan que contiene una letra .letra.
+// Fix 2 : Agrefamos una clase para los espacios (.espaco) para tenerlos también en cuenta.
+function agruparSpansPorPalabra(frase, destino /* <p> */) {
+    const palabra = document.createDocumentFragment();
+
+    let spanPalabra = document.createElement("span");
+    spanPalabra.className = "palabra";
+
+    for (const letra of [...frase]) {
+        if (letra === " ") {
+            if (spanPalabra.childNodes.length) {
+                palabra.appendChild(spanPalabra);
+                spanPalabra = document.createElement("span");
+                spanPalabra.className = "palabra";
+            }
+            const spanEspacio = document.createElement("span");
+            spanEspacio.className = "espacio";
+            spanEspacio.textContent = " ";
+            palabra.appendChild(spanEspacio);
+        } else {
+            const spanLetra = document.createElement("span");
+            spanLetra.className = "letra";
+            spanLetra.textContent = letra;
+            spanPalabra.appendChild(spanLetra);
+        }
+    }
+
+    // última palabra si quedó algo
+    if (spanPalabra.childNodes.length) {
+        palabra.appendChild(spanPalabra);
+    }
+
+    // pintamos en el <p> destino
+    destino.replaceChildren(palabra);
+}

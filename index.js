@@ -59,7 +59,8 @@ const pantallas = {
 let texto = null; // frases en memoria
 async function cargarFrases() {
     if (texto) return texto; // ya cargado
-    const res = await fetch("/frases.json");
+    const res = await fetch("./frases.json", { cache: "no-store" });
+    // const res = await fetch("/frases.json");
     texto = await res.json();
     return texto;
 }

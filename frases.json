@@ -12,27 +12,27 @@
         "Repite la frase hasta clavarla."
     ],
     "media": [
-        "Programar es resolver problemas paso a paso.",
-        "La precisión es más importante que la velocidad al principio.",
-        "Divide las tareas en trozos pequeños y medibles.",
-        "Un buen descanso mejora el rendimiento al teclear.",
-        "La constancia vence a la inspiración pasajera.",
-        "Empieza despacio, luego sube el ritmo.",
-        "Usa atajos del teclado para ahorrar tiempo.",
-        "Mantén la vista en el texto y no en las manos.",
-        "Registra tus errores y busca patrones.",
-        "Calienta con diez minutos de escritura libre."
+        "Practica a diario y mantén un ritmo constante al escribir.",
+        "La precisión mejora cuando relajas los hombros y respiras con calma.",
+        "Usa pausas cortas; evalúa errores y vuelve al texto con foco.",
+        "Cambia de dificultad solo cuando mantengas la precisión estable.",
+        "Evita mirar el teclado; confía en la memoria de tus manos.",
+        "Ajusta la postura: espalda recta, muñecas neutras, mirada al frente.",
+        "Divide el ejercicio en bloques, registra tiempos y resultados.",
+        "Reduce la fuerza al pulsar; busca un toque suave y uniforme.",
+        "\"Empieza limpio\" y corrige al final, sin romper la cadencia.",
+        "Alterna precisión y velocidad; la constancia te dará progreso real."
     ],
     "dificil": [
-        "¿Podrías explicarme cómo sincronizar eventos asíncronos sin bloquear el hilo?",
-        "La práctica deliberada requiere atención plena y retroalimentación inmediata.",
-        "Optimiza tu postura: espalda recta, muñecas neutras y mirada al frente.",
-        "Evita tensar los hombros; respira y libera la presión al escribir.",
-        "Alterna ejercicios de precisión con sprints de velocidad controlada.",
-        "Si falla el debounce, ¿ajustas el intervalo o redefines el flujo de eventos?",
-        "Revisa logs en tiempo real: filtra, agrupa y compara entradas consecutivas.",
-        "«Escribir claro» no es trivial: elimina muletillas, simplifica, pero no mutiles el sentido.",
-        "Planifica descansos activos (2–3 minutos): estira dedos, hombros y cuello; hidrátate.",
-        "Cuando aparezca la fatiga, reduce un 20% la velocidad y prioriza la precisión."
+        "\"Coordina manos y mirada\": ajusta la postura, respira; encadena palabras largas (sin tensar), y mezcla signos { [ ] ( ) } con pausas breves y controladas.",
+        "\"Mantén la cadencia\"; evita golpear teclas con fuerza: alterna ritmos (lento, medio, rápido), registra métricas, y valida bloques {inicio: 1, medio: 2, fin: 3}.",
+        "Practica secuencias extensas con atención plena; separa por frases, agrupa símbolos { [a, b, c] }, integra paréntesis (ideas clave) y consolida el trazo.",
+        "Afinar la precisión requiere constancia: escribe, revisa, corrige; incorpora series largas con comas, puntos y sintaxis {valores: [1, 2, 3]} sin perder el ritmo.",
+        "Estructura la sesión: calentamiento, núcleo, repaso; usa intervalos cronometrados (3 x 60 s), añade signos { { } [ ] ( ) } y consolida la memoria muscular.",
+        "Planifica por etapas: 1) postura correcta, 2) ritmo constante, 3) revisión final; intercala corchetes [marcas] y llaves {datos} para segmentar el ejercicio.",
+        "Sostén la atención en cada dedo: recorre patrones [q, w, e, r, t], añade ajustes {mano: izquierda}, inserta paréntesis (micro-pausas) y cierra en calma.",
+        "Incrementa dificultad gradualmente; alterna bloques densos con símbolos { [ ] ( ) }, añade dos puntos: define reglas, y registra métricas al final.",
+        "Procesa texto continuo con precisión; integra llaves {config}, corchetes [opciones], y paréntesis (notas) mientras mantienes un ritmo regular y estable.",
+        "Repite series extensas; usa comas para modular la lectura, puntos para cerrar ideas, y estructuras {tabla: [fila1, fila2]} para reforzar la memoria táctil."
     ]
 }

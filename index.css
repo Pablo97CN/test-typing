@@ -372,6 +372,13 @@ main {
     animation-timing-function: linear;
 }
 
+#contenedorFrase {
+    white-space: pre-wrap;
+    word-break: keep-all;
+    margin: auto;
+    width: 75%;
+}
+
 #contenedorFrase input {
     opacity: 0%;
     position: absolute;
@@ -406,11 +413,7 @@ main {
     display: none;
 }
 
-#contenedorFrase {
-    white-space: pre-wrap;
-    word-break: keep-all;
-    margin: 1rem;
-}
+
 
 .palabra {
     display: inline-block;
